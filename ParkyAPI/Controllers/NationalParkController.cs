@@ -6,7 +6,7 @@ using ParkyAPI.Repository.IRepository;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // Here means we use Controller Name as URL, the Action Name will not be considered!!
     [ApiController]
     public class NationalParksController : ControllerBase
     {
@@ -30,6 +30,18 @@ namespace ParkyAPI.Controllers
             {
                 objDto.Add(_mapper.Map<NationalParkDto>(obj));
             }
+            return Ok(objDto);
+        }
+
+        [HttpGet("{nationalParkId:int}")] // must put the parameter into here, or the Request will not target this endpoint
+        public IActionResult GetNationalPark(int nationalParkId)
+        {
+            var obj = _parkRepository.GetNationalPark(nationalParkId);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            var objDto = _mapper.Map<NationalParkDto>(obj);
             return Ok(objDto);
         }
 
