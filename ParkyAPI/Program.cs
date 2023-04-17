@@ -20,7 +20,7 @@ namespace ParkyAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
-            builder.Services.AddAutoMapper(typeof(ParkyMappings));
+            builder.Services.AddAutoMapper(typeof(ParkyMappings));  // add AutoMapper to Service Container
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
