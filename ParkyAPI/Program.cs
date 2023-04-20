@@ -31,7 +31,12 @@ namespace ParkyAPI
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();  // added by Default
-                app.UseSwaggerUI();// added by Default
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/ParkyOpenAPISpec/swagger.json", "Parky API");
+                    //options.RoutePrefix = "";
+
+                });// added by Default
             }
 
             app.UseHttpsRedirection();
