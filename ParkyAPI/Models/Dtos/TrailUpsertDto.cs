@@ -3,11 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkyAPI.Models.Dtos
 {
-    // This DTO is used for All use cases other then Update and Insert
-    // we will need the API can return an Trail Object and also its National Park as well
-
-
-    public class TrailDto
+    // This DTO is used for Update and Insert
+    // As at these two use case, We will provide a Trail object, and in this object. we will not provide a 
+    // National Park object
+    public class TrailUpsertDto
     {
         public int Id { get; set; }
         [Required]
@@ -17,6 +16,6 @@ namespace ParkyAPI.Models.Dtos
         public DifficultyType Difficulty { get; set; }
         [Required]
         public int NationalParkId { get; set; }
-        public NationalParkDto? NationalPark { set; get; }
+
     }
 }
