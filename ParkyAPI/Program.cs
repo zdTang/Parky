@@ -24,6 +24,7 @@ namespace ParkyAPI
             });// this is added by default. Maybe the new version Asp.net core did this.
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
+            builder.Services.AddScoped<ITrailRepository, TrailRepository>();
             builder.Services.AddAutoMapper(typeof(ParkyMappings));  // add AutoMapper to Service Container
             var app = builder.Build();
 
