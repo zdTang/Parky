@@ -57,10 +57,10 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesDefaultResponseType]
-        public IActionResult CreateTrail([FromBody] TrailUpsertDto trailDto)
+        public IActionResult CreateTrail([FromBody] TrailCreateDto trailDto)
         {
             if (trailDto == null) return BadRequest(ModelState);
-            if (_trailRepository.TrailExists(trailDto.Id))
+            if (_trailRepository.TrailExists(trailDto.Name))
             {
                 ModelState.AddModelError("", "Trail Exists!");
                 return StatusCode(404, ModelState);
@@ -86,7 +86,7 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult UpdateTrail(int trailId, [FromBody] TrailUpsertDto trailDto)
+        public IActionResult UpdateTrail(int trailId, [FromBody] TrailUpdateDto trailDto)
         {
             if (trailDto == null || trailId != trailDto.Id) return BadRequest(ModelState);
             var trailObj = _mapper.Map<Trail>(trailDto);

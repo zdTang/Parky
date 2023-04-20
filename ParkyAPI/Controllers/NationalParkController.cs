@@ -60,7 +60,7 @@ namespace ParkyAPI.Controllers
         public IActionResult CreateNationalPrk([FromBody] NationalParkDto nationalParkDto)
         {
             if (nationalParkDto == null) return BadRequest(ModelState);
-            if (_parkRepository.NationalParkExists(nationalParkDto.Id))
+            if (_parkRepository.NationalParkExists(nationalParkDto.Name))
             {
                 ModelState.AddModelError("", "National Park Exists!");
                 return StatusCode(404, ModelState);

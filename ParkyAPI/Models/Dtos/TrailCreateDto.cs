@@ -3,12 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkyAPI.Models.Dtos
 {
-    // This DTO is used for Update and Insert
-    // As at these two use case, We will provide a Trail object, and in this object. we will not provide a 
-    // National Park object
-    public class TrailUpsertDto
+    // This DTO is used for Create only, we will not provide Trail Id for this use case.
+    public class TrailCreateDto
     {
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; } = "";
         [Required]
