@@ -116,7 +116,7 @@ namespace ParkyAPI.Controllers
 
             if (!_parkRepository.DeleteNatinalPark(nationalParkObj!))
             {
-                ModelState.AddModelError("", $"Something went wrong when deleting the record {nationalParkObj.Name}");
+                ModelState.AddModelError("", $"Something went wrong when deleting the record {nationalParkObj?.Name}");
                 return StatusCode(500, ModelState);
             }
 
