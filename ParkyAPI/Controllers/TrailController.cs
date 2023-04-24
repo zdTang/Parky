@@ -52,6 +52,26 @@ namespace ParkyAPI.Controllers
             return Ok(objDto);
         }
 
+        [HttpGet("{trailId:int}", Name = "GetTrail")] // must put the parameter into here, or the Request will not target this endpoint
+        [ProducesResponseType(200, Type = typeof(TrailDto))]
+        [ProducesResponseType(404)]
+        [ProducesDefaultResponseType]
+        public IActionResult GetTrailInNationalPark(int nationalParkId)
+        {
+            var trailList = _trailRepository.GetTrailsInNationalPark(nationalParkId);
+            if (trailList == null)
+            {
+                return NotFound();
+            }
+            var trailDtoList = new List<TrailDto>();
+            foreach (var trail in trailList)
+            {
+                trailDtoList.Add(_mapper.Map<TrailDto>(trail));
+            }
+
+            return Ok(trailDtoList);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(TrailDto))]
         [ProducesResponseType(StatusCodes.Status201Created)]
