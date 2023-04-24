@@ -20,7 +20,24 @@ namespace ParkyAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Parky API", Version = "1" });
+                options.SwaggerDoc("ParkyOpenAPISpec", new Microsoft.OpenApi.Models.OpenApiInfo()
+                {
+                    Title = "Parky API",
+                    Version = "1",
+                    Description = "Uemy Parky API",
+                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
+                    {
+                        Email = "zhendongtt@gmail.com",
+                        Name = "Mike Tang",
+                        Url = new Uri("https://www.Prosites.com")
+                    },
+                    License = new Microsoft.OpenApi.Models.OpenApiLicense()
+                    {
+                        Name = "MIT License",
+                        Url = new Uri("https://en.wikipedia.org/wike/MIT_License")
+                    }
+
+                });
             });// this is added by default. Maybe the new version Asp.net core did this.
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
