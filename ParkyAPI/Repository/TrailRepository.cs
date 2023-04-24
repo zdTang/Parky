@@ -26,12 +26,14 @@ namespace ParkyAPI.Repository
 
         public Trail? GetTrail(int trailId)
         {
-            return _dbContext.Trails.FirstOrDefault(a => a.Id == trailId);
+            //return _dbContext.Trails.FirstOrDefault(a => a.Id == trailId);
+            return _dbContext.Trails.Include(u => u.NationalPark).FirstOrDefault(a => a.Id == trailId);
         }
 
         public ICollection<Trail> GetTrails()
         {
-            return _dbContext.Trails.OrderBy(a => a.Name).ToList();
+            //return _dbContext.Trails.OrderBy(a => a.Name).ToList();
+            return _dbContext.Trails.Include(u => u.NationalPark).OrderBy(a => a.Name).ToList();
         }
 
         public bool TrailExists(string name)
@@ -58,8 +60,9 @@ namespace ParkyAPI.Repository
 
         public ICollection<Trail> GetTrailsInNationalPark(int npId)
         {
-            //return _dbContext.Trails.Include(c=>c.NationalPark).Where(c=>c.NationalParkId==npId).ToList();
-            return _dbContext.Trails.Where(c => c.NationalParkId == npId).ToList();
+            //without "Include",NationalPark object will be null in the return object 
+            return _dbContext.Trails.Include(c => c.NationalPark).Where(c => c.NationalParkId == npId).ToList();
+            //return _dbContext.Trails.Where(c => c.NationalParkId == npId).ToList();
         }
     }
 }
