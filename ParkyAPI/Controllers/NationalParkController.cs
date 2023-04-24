@@ -7,7 +7,8 @@ using ParkyAPI.Repository.IRepository;
 
 namespace ParkyAPI.Controllers
 {
-    [Route("api/[controller]")] // Here means we use Controller Name as URL, the Action Name will not be considered!!
+    [Route("api/v{version:apiVersion}/nationalparks")]
+    //[Route("api/[controller]")] // Here means we use Controller Name as URL, the Action Name will not be considered!!
     [ApiController]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class NationalParksController : ControllerBase
