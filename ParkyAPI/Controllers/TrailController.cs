@@ -52,7 +52,8 @@ namespace ParkyAPI.Controllers
             return Ok(objDto);
         }
 
-        [HttpGet("{trailId:int}", Name = "GetTrail")] // must put the parameter into here, or the Request will not target this endpoint
+        //[HttpGet("GetTrailInNationalPark/{trailId:int}")] // works
+        [HttpGet("[action]/{trailId:int}")]//works
         [ProducesResponseType(200, Type = typeof(TrailDto))]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
