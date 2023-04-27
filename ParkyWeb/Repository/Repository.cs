@@ -29,22 +29,48 @@ namespace ParkyWeb.Repository
 
         public async Task<bool> DeleteAsync(string url, int Id)
         {
-            throw new NotImplementedException();
+            var request=new  HttpRequestMessage(HttpMethod.Delete,url+Id);
+            
+            var client= _clientFactory.CreateClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            return (response.StatusCode == System.Net.HttpStatusCode.NotFound);
         }
 
         public async Task<IEnumerable<T>?> GetAllAsync(string url)
         {
-            throw new NotImplementedException();
+            var request=new  HttpRequestMessage(HttpMethod.Get,url);
+            
+            var client= _clientFactory.CreateClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            return (response.StatusCode == System.Net.HttpStatusCode.OK)
+            ?JsonConvert.DeserializeObject<IEnumerable<T>>(await response.Content.ReadAsStringAsync())
+            :null;
         }
 
         public async Task<T?> GetAsync(string url, int Id)
         {
-            throw new NotImplementedException();
+            var request=new  HttpRequestMessage(HttpMethod.Get,url+Id);
+            
+            var client= _clientFactory.CreateClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            return (response.StatusCode == System.Net.HttpStatusCode.OK)
+            ?JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync())
+            :null;
         }
 
         public async Task<bool> UpdateAsync(string url, T objectToUpdate)
         {
-            throw new NotImplementedException();
+            var request=new  HttpRequestMessage(HttpMethod.Patch,url);
+            if (objectToUpdate != null)
+            {
+                request.Content = new StringContent(JsonConvert.SerializeObject(objectToUpdate), Encoding.UTF8, "application/json");
+            }
+            else{
+                return false;
+            }
+            var client= _clientFactory.CreateClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            return (response.StatusCode == System.Net.HttpStatusCode.NoContent);
         }
     }
 
