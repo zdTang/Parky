@@ -26,10 +26,21 @@ namespace ParkyWeb.Controllers
         {
             return View(new NationalPark() { });
         }
-
-        public async Task<IActionResult> GetAllNationalParks()
+        public async Task<IActionResult> Upsert(int? id)
         {
-            return Json(await _parkRepository.GetAllAsync(SD.NationalParkAPIPath));
+            var obj = new NationalPark();
+            if (id == null) return View(obj); //
+
+            // Follow will come here for update
+            obj = await _parkRepository.GetAsync(SD.NationalParkAPIPath, id.GetValueOrDefault()); // get data from DB based on Id
+            if (obj == null) return NotFound();
+            return View(obj);
+        }
+
+        public async Task<IActionResult> GetAllNationalPark()
+        {
+            var result = await _parkRepository.GetAllAsync(SD.NationalParkAPIPath);
+            return Json(new { data = result });
         }
 
 
