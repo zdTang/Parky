@@ -45,7 +45,7 @@ namespace ParkyWeb.Controllers
                 var files = HttpContext.Request.Form.Files;
                 if (files.Count > 0)
                 {
-                    byte[] p1 = null;
+                    byte[]? p1 = null;
                     using (var fs1 = files[0].OpenReadStream())
                     {
                         using (var ms1 = new MemoryStream())
@@ -77,6 +77,16 @@ namespace ParkyWeb.Controllers
             }
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var status = await _parkRepository.DeleteAsync(SD.NationalParkAPIPath, id);
+            if (status)
+            {
+                return Json(new { success = true, message = "Delete Successful" });
+            }
+            return Json(new { success = false, message = "Delete Not Successful" });
+        }
         public async Task<IActionResult> GetAllNationalPark()
         {
             var result = await _parkRepository.GetAllAsync(SD.NationalParkAPIPath);

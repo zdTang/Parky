@@ -34,7 +34,7 @@ namespace ParkyWeb.Repository
 
             var client = _clientFactory.CreateClient();
             HttpResponseMessage response = await client.SendAsync(request);
-            return (response.StatusCode == System.Net.HttpStatusCode.NotFound);
+            return (response.StatusCode == System.Net.HttpStatusCode.NoContent);
         }
 
         public async Task<IEnumerable<T>?> GetAllAsync(string url)
