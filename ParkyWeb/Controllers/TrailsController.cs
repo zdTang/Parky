@@ -33,7 +33,9 @@ namespace ParkyWeb.Controllers
                 {
                     Text = I.Name,
                     Value = I.Id.ToString()
-                })
+                }),
+                Trail = new Trail()
+
             };
 
             if (id == null) return View(objVM); //
