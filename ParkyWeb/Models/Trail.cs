@@ -10,12 +10,14 @@ namespace ParkyWeb.Models
 
     public class Trail
     {
-        [Required]
+        //[Required] for new created trail, will have null Id
         public int Id { get; set; }
         [Required]
         public string Name { get; set; } = "";
         [Required]
         public double Distance { get; set; }
+        [Required]
+        public double Elevation { get; set; }
         public DifficultyType Difficulty { get; set; }
         [Required]
         public int NationalParkId { get; set; }

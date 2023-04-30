@@ -7,7 +7,7 @@ $(document).ready(function () {
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
         "ajax": {
-            "url": "/nationalParks/GetAllNationalPark", //Be aware, this URL is ParkyWeb's url, we will call ParkyAPI from ParkyWeb server, other than from frontend
+            "url": "/trail/GetAllTrails", // ParkyWeb's url, not of ParkyAPI
             "type": "GET",
             "datatype": "json"
         },
