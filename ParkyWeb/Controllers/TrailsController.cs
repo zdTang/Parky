@@ -63,6 +63,15 @@ namespace ParkyWeb.Controllers
             }
             else
             {
+                IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath);
+
+                obj.NationalParkList = npList?.Select(I => new SelectListItem
+                {
+                    Text = I.Name,
+                    Value = I.Id.ToString()
+                });
+
+
                 return View(obj);
             }
         }
