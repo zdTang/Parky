@@ -1,12 +1,13 @@
-using System.Text;
 using Newtonsoft.Json;
 using ParkyWeb.Repository.IRepository;
+using System.Text;
 
 namespace ParkyWeb.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly IHttpClientFactory _clientFactory;
+
         public Repository(IHttpClientFactory clientFactory)
         {
             _clientFactory = clientFactory;
@@ -75,6 +76,4 @@ namespace ParkyWeb.Repository
             return (response.StatusCode == System.Net.HttpStatusCode.NoContent);
         }
     }
-
-
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyAPI.Models;
 using ParkyAPI.Models.Dtos;
@@ -21,7 +20,6 @@ namespace ParkyAPI.Controllers
             _trailRepository = trailRepository;
             _mapper = mapper;
         }
-
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<TrailDto>))]
@@ -103,7 +101,6 @@ namespace ParkyAPI.Controllers
             return CreatedAtRoute("GetTrail", new { trailId = trailObj.Id }, trailObj);
         }
 
-
         [HttpPatch("{trailId:int}", Name = "UpdateTrail")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -122,8 +119,6 @@ namespace ParkyAPI.Controllers
             return NoContent();
         }
 
-
-
         [HttpDelete("{trailId:int}", Name = "UpdateTrail")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -134,8 +129,6 @@ namespace ParkyAPI.Controllers
             if (!_trailRepository.TrailExists(trailId)) return NotFound(ModelState);
             var trailObj = _trailRepository.GetTrail(trailId);
 
-
-
             if (!_trailRepository.DeleteTrail(trailObj!))
             {
                 ModelState.AddModelError("", $"Something went wrong when deleting the record {trailObj?.Name}");
@@ -144,7 +137,5 @@ namespace ParkyAPI.Controllers
 
             return NoContent();
         }
-
-
     }
 }

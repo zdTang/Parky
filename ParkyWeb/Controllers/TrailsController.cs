@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ParkyWeb.Models;
 using ParkyWeb.Models.ViewModel;
 using ParkyWeb.Repository.IRepository;
+
 namespace ParkyWeb.Controllers
 {
     //[Route("[controller]")]
@@ -19,11 +20,11 @@ namespace ParkyWeb.Controllers
             _nationalParkRepository = nationalParkRepository;
         }
 
-
         public IActionResult Index()
         {
             return View(new Trail() { });
         }
+
         public async Task<IActionResult> Upsert(int? id)
         {
             IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath);
@@ -35,7 +36,6 @@ namespace ParkyWeb.Controllers
                     Value = I.Id.ToString()
                 }),
                 Trail = new Trail()
-
             };
 
             if (id == null) return View(objVM); //
@@ -45,6 +45,7 @@ namespace ParkyWeb.Controllers
             if (objVM.Trail == null) return NotFound();
             return View(objVM);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(TrailsVM? obj)
@@ -71,7 +72,6 @@ namespace ParkyWeb.Controllers
                     Value = I.Id.ToString()
                 });
 
-
                 return View(obj);
             }
         }
@@ -86,12 +86,12 @@ namespace ParkyWeb.Controllers
             }
             return Json(new { success = false, message = "Delete Not Successful" });
         }
+
         public async Task<IActionResult> GetAllTrails()
         {
             var result = await _trailRepository.GetAllAsync(SD.TrailAPIPath);
             return Json(new { data = result });
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

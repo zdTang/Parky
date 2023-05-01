@@ -13,6 +13,5 @@ namespace ParkyAPI.ParkyMapper
             CreateMap<Trail, TrailUpdateDto>().ReverseMap();
             CreateMap<Trail, TrailCreateDto>().ReverseMap();
         }
-
     }
 }

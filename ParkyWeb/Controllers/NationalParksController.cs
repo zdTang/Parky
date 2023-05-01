@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using ParkyWeb.Models;
 using ParkyWeb.Repository.IRepository;
+
 namespace ParkyWeb.Controllers
 {
     //[Route("[controller]")]
@@ -21,11 +16,11 @@ namespace ParkyWeb.Controllers
             _logger = logger;
         }
 
-
         public IActionResult Index()
         {
             return View(new NationalPark() { });
         }
+
         public async Task<IActionResult> Upsert(int? id)
         {
             var obj = new NationalPark();
@@ -36,6 +31,7 @@ namespace ParkyWeb.Controllers
             if (obj == null) return NotFound();
             return View(obj);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(NationalPark obj)
@@ -87,12 +83,12 @@ namespace ParkyWeb.Controllers
             }
             return Json(new { success = false, message = "Delete Not Successful" });
         }
+
         public async Task<IActionResult> GetAllNationalPark()
         {
             var result = await _parkRepository.GetAllAsync(SD.NationalParkAPIPath);
             return Json(new { data = result });
         }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -7,18 +7,27 @@ namespace ParkyAPI.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; } = "";
+
         [Required]
         public double Distance { get; set; }
+
         [Required]
         public double Elevation { get; set; }
+
         public DifficultyType Difficulty { get; set; }
+
         [Required]
         public int NationalParkId { get; set; }
+
         [ForeignKey("NationalParkId")]
         public NationalPark? NationalPark { set; get; }
+
         public DateTime DateCreated { get; set; }
     }
-    public enum DifficultyType { Easy, Moderate, Difficult, Expert }
+
+    public enum DifficultyType
+    { Easy, Moderate, Difficult, Expert }
 }

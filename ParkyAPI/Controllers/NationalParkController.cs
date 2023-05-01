@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyAPI.Models;
 using ParkyAPI.Models.Dtos;
@@ -21,7 +20,6 @@ namespace ParkyAPI.Controllers
             _parkRepository = parkRepository;
             _mapper = mapper;
         }
-
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<NationalPark>))]
@@ -82,7 +80,6 @@ namespace ParkyAPI.Controllers
             return CreatedAtRoute("GetNationalPark", new { version = HttpContext.GetRequestedApiVersion()?.ToString(), nationalParkId = nationalParkObj.Id }, nationalParkObj);
         }
 
-
         [HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,8 +98,6 @@ namespace ParkyAPI.Controllers
             return NoContent();
         }
 
-
-
         [HttpDelete("{nationalParkId:int}", Name = "UpdateNationalPark")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,8 +108,6 @@ namespace ParkyAPI.Controllers
             if (!_parkRepository.NationalParkExists(nationalParkId)) return NotFound(ModelState);
             var nationalParkObj = _parkRepository.GetNationalPark(nationalParkId);
 
-
-
             if (!_parkRepository.DeleteNatinalPark(nationalParkObj!))
             {
                 ModelState.AddModelError("", $"Something went wrong when deleting the record {nationalParkObj?.Name}");
@@ -123,7 +116,5 @@ namespace ParkyAPI.Controllers
 
             return NoContent();
         }
-
-
     }
 }

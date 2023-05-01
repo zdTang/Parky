@@ -8,10 +8,12 @@ namespace ParkyAPI.Repository
     public class TrailRepository : ITrailRepository
     {
         private readonly ApplicationDbContext _dbContext;
+
         public TrailRepository(ApplicationDbContext context)
         {
             _dbContext = context;
         }
+
         public bool CreateTrail(Trail trail)
         {
             _dbContext.Trails.Add(trail);
@@ -60,7 +62,7 @@ namespace ParkyAPI.Repository
 
         public ICollection<Trail> GetTrailsInNationalPark(int npId)
         {
-            //without "Include",NationalPark object will be null in the return object 
+            //without "Include",NationalPark object will be null in the return object
             return _dbContext.Trails.Include(c => c.NationalPark).Where(c => c.NationalParkId == npId).ToList();
             //return _dbContext.Trails.Where(c => c.NationalParkId == npId).ToList();
         }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ParkyAPI.Models;
 using ParkyAPI.Models.Dtos;
@@ -23,7 +22,6 @@ namespace ParkyAPI.Controllers
             _mapper = mapper;
         }
 
-
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(List<NationalPark>))]
         public IActionResult GetNationalParks()
@@ -37,6 +35,5 @@ namespace ParkyAPI.Controllers
             }
             return Ok(objDto);
         }
-
     }
 }

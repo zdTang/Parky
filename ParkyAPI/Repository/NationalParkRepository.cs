@@ -7,10 +7,12 @@ namespace ParkyAPI.Repository
     public class NationalParkRepository : INationalParkRepository
     {
         private readonly ApplicationDbContext _dbContext;
+
         public NationalParkRepository(ApplicationDbContext context)
         {
             _dbContext = context;
         }
+
         public bool CreateNatinalPark(NationalPark nationalPark)
         {
             _dbContext.NationalParks.Add(nationalPark);
