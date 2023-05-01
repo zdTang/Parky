@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkyWeb.Models;
 using ParkyWeb.Models.ViewModel;
-using ParkyWeb.Repository;
 using ParkyWeb.Repository.IRepository;
 using System.Diagnostics;
 
@@ -37,8 +36,8 @@ namespace ParkyWeb.Controllers
         {
             var listOfParkAndTrails = new IndexVM
             {
-                NationalPark = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath),
-                Trails = await _trailRepository.GetAllAsync(SD.TrailAPIPath),
+                NationalParkList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath),
+                TrailList = await _trailRepository.GetAllAsync(SD.TrailAPIPath),
             };
             return View(listOfParkAndTrails);
         }

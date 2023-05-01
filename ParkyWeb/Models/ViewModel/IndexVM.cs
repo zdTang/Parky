@@ -2,7 +2,7 @@
 {
     public class IndexVM
     {
-        public IEnumerable<NationalPark>? NationalPark { get; set; }
-        public IEnumerable<Trail>? Trails { get; set; }
+        public IEnumerable<NationalPark>? NationalParkList { get; set; }
+        public IEnumerable<Trail>? TrailList { get; set; }
     }
 }
