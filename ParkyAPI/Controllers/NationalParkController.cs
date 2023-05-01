@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkyAPI.Models;
 using ParkyAPI.Models.Dtos;
@@ -39,6 +40,7 @@ namespace ParkyAPI.Controllers
         [ProducesResponseType(200, Type = typeof(NationalPark))]
         [ProducesResponseType(404)]
         [ProducesDefaultResponseType]
+        [Authorize]
         public IActionResult GetNationalPark(int nationalParkId)
         {
             var obj = _parkRepository.GetNationalPark(nationalParkId);
