@@ -48,6 +48,8 @@ namespace ParkyAPI
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
             builder.Services.AddScoped<ITrailRepository, TrailRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
+            var appSettings = builder.Configuration.GetSection("AppSettings");
+            builder.Services.Configure<AppSettings>(appSettings);
             builder.Services.AddAutoMapper(typeof(ParkyMappings));  // add AutoMapper to Service Container
             builder.Services.AddApiVersioning(options =>
             {
