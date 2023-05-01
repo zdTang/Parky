@@ -47,6 +47,7 @@ namespace ParkyAPI
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
             builder.Services.AddScoped<ITrailRepository, TrailRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddAutoMapper(typeof(ParkyMappings));  // add AutoMapper to Service Container
             builder.Services.AddApiVersioning(options =>
             {
