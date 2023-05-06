@@ -35,6 +35,7 @@ namespace ParkyAPI.Repository
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
+            user.Password = "";// this value has been used, we don't show it again
             return user;
         }
 
