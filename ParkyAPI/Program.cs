@@ -57,7 +57,7 @@ namespace ParkyAPI
             builder.Services.Configure<AppSettings>(appSettingsSection);
 
             var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings?.Secret);
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret!);
             //notice to install the right Version: Microsoft.AspNetCore.Authentication.JwtBearer;
             //Here to install relevent classes to support this kind of Authentication
             builder.Services.AddAuthentication(x =>
