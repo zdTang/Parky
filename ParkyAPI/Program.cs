@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using ParkyAPI.Data;
 using ParkyAPI.ParkyMapper;
 using ParkyAPI.Repository;
 using ParkyAPI.Repository.IRepository;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text;
 
 namespace ParkyAPI
 {
@@ -48,8 +51,32 @@ namespace ParkyAPI
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
             builder.Services.AddScoped<ITrailRepository, TrailRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
-            var appSettings = builder.Configuration.GetSection("AppSettings");
-            builder.Services.Configure<AppSettings>(appSettings);
+
+            //Why we retrieve value from appSettings.json like this complicated.
+            var appSettingsSection = builder.Configuration.GetSection("AppSettings");
+            builder.Services.Configure<AppSettings>(appSettingsSection);
+
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings?.Secret);
+            //notice to install the right Version: Microsoft.AspNetCore.Authentication.JwtBearer;
+            //Here to install relevent classes to support this kind of Authentication
+            builder.Services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; //Just a string
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;  //Just a string
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,  // Once deploy to Production, need set it as True
+                    ValidateAudience = false // Once deploy to Production, need set it as True
+                };
+            });
+
             builder.Services.AddAutoMapper(typeof(ParkyMappings));  // add AutoMapper to Service Container
             builder.Services.AddApiVersioning(options =>
             {
@@ -85,8 +112,11 @@ namespace ParkyAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.MapControllers();
 
