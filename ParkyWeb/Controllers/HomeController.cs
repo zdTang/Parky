@@ -88,7 +88,7 @@ namespace ParkyWeb.Controllers
             if (result == false) return View();
             return RedirectToAction("Login");
         }
-        public async Task<IActionResult> LogoutAsync()
+        public IActionResult LogoutAsync()
         {
             HttpContext.Session.SetString("JWToken", "");
             return RedirectToAction("Index");

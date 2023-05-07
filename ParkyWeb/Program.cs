@@ -12,6 +12,9 @@ namespace ParkyWeb
             // Add services to the container.
             builder.Services.AddScoped<INationalParkRepository, NationalParkRepository>();
             builder.Services.AddScoped<ITrailRepository, TrailRepository>();
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddHttpClient(); // This is using to make HTTP CALL
             //Register Session
