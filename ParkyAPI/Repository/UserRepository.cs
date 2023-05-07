@@ -41,12 +41,22 @@ namespace ParkyAPI.Repository
 
         public bool IsUniqueUser(string username)
         {
-            throw new NotImplementedException();
+            var user = _db.Users.SingleOrDefault(t => t.UserName == username);
+            if (user == null) return true;  // Not find in DB, means the coming NAME is good to use
+            return false;
         }
 
         public User Register(string userName, string password)
         {
-            throw new NotImplementedException();
+            var userObj = new User
+            {
+                UserName = userName,
+                Password = password
+            };
+            _db.Users.Add(userObj);
+            _db.SaveChanges();
+            userObj.Password = "";// empty the password
+            return userObj;
         }
     }
 }
