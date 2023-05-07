@@ -14,6 +14,13 @@ namespace ParkyWeb
             builder.Services.AddScoped<ITrailRepository, TrailRepository>();
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
             builder.Services.AddHttpClient(); // This is using to make HTTP CALL
+            //Register Session
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -29,6 +36,8 @@ namespace ParkyWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseSession();// Add to middleware
 
             app.UseAuthorization();
 

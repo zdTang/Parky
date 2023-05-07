@@ -11,12 +11,14 @@ namespace ParkyWeb.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly INationalParkRepository _nationalParkRepository;
         private readonly ITrailRepository _trailRepository;
+        private readonly IAccountRepository _accountRepository;
 
-        public HomeController(ILogger<HomeController> logger, ITrailRepository trailRepository, INationalParkRepository nationalParkRepository)
+        public HomeController(ILogger<HomeController> logger, ITrailRepository trailRepository, INationalParkRepository nationalParkRepository, IAccountRepository accountRepository)
         {
             _logger = logger;
             _trailRepository = trailRepository;
             _nationalParkRepository = nationalParkRepository;
+            _accountRepository = accountRepository;
         }
 
         //public IActionResult Index()
@@ -51,6 +53,28 @@ namespace ParkyWeb.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            User obj = new User();// we don't need do this ,we can just tell the Razor view the Model Type
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(User obj)
+        {
+            var objUser = await _accountRepository.LoginAsync(SD.AccountAPIPath + "authenticate/", obj);
+            if (objUser?.Token == null) return View();
+
+            HttpContext.Session.SetString("JWToken", objUser.Token);
+            return RedirectToAction("Index");
+        }
+        public IActionResult Logout()
+        {
+            return View();
         }
     }
 }
