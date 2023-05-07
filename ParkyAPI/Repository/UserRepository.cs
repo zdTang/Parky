@@ -29,7 +29,10 @@ namespace ParkyAPI.Repository
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
-                { new Claim(ClaimTypes.Name, user.Id.ToString())}),
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),  // ClaimType--Name
+                    new Claim(ClaimTypes.Role,user.Role!)            // ClaimType--Role : The trick is here, how to add role to User
+                }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -51,7 +54,8 @@ namespace ParkyAPI.Repository
             var userObj = new User
             {
                 UserName = userName,
-                Password = password
+                Password = password,
+                Role = "Admin"
             };
             _db.Users.Add(userObj);
             _db.SaveChanges();
