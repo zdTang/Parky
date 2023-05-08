@@ -81,6 +81,7 @@ namespace ParkyWeb.Controllers
 
             // These are for API calls
             HttpContext.Session.SetString("JWToken", objUser.Token);
+            TempData["alert"] = "Registeration Successful";
             return RedirectToAction("Index");
         }
 
@@ -97,6 +98,7 @@ namespace ParkyWeb.Controllers
         {
             var result = await _accountRepository.RegisterAsync(SD.AccountAPIPath + "register/", obj);
             if (result == false) return View();
+            TempData["alert"] = "Registeration Successful";
             return RedirectToAction("Login");
         }
         public async Task<IActionResult> LogoutAsync()
