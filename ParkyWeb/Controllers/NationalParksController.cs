@@ -1,10 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ParkyWeb.Models;
 using ParkyWeb.Repository.IRepository;
 
 namespace ParkyWeb.Controllers
 {
-    //[Route("[controller]")]
+    [Authorize]
     public class NationalParksController : Controller
     {
         private readonly ILogger<NationalParksController> _logger;
@@ -20,7 +21,7 @@ namespace ParkyWeb.Controllers
         {
             return View(new NationalPark() { });
         }
-
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upsert(int? id)
         {
             var obj = new NationalPark();
@@ -75,7 +76,7 @@ namespace ParkyWeb.Controllers
                 return View(obj);
             }
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {

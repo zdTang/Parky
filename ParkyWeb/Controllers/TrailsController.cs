@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ParkyWeb.Models;
@@ -6,7 +7,7 @@ using ParkyWeb.Repository.IRepository;
 
 namespace ParkyWeb.Controllers
 {
-    //[Route("[controller]")]
+    [Authorize]
     public class TrailsController : Controller
     {
         private readonly ILogger<TrailsController> _logger;
@@ -25,6 +26,7 @@ namespace ParkyWeb.Controllers
             return View(new Trail() { });
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Upsert(int? id)
         {
             var token = HttpContext.Session.GetString("JWToken") ?? "";
