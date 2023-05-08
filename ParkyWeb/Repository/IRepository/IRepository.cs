@@ -2,14 +2,14 @@
 {
     public interface IRepository<T> where T : class
     {
-        Task<T?> GetAsync(string url, int Id);
+        Task<T?> GetAsync(string url, int Id, string token);
 
-        Task<IEnumerable<T>?> GetAllAsync(string url);
+        Task<IEnumerable<T>?> GetAllAsync(string url, string token);
 
-        Task<bool> CreateAsync(string url, T objectToCreate);
+        Task<bool> CreateAsync(string url, T objectToCreate, string token);
 
-        Task<bool> UpdateAsync(string url, T objectToUpdate);
+        Task<bool> UpdateAsync(string url, T objectToUpdate, string token);
 
-        Task<bool> DeleteAsync(string url, int Id);
+        Task<bool> DeleteAsync(string url, int Id, string token);
     }
 }

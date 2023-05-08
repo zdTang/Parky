@@ -36,10 +36,11 @@ namespace ParkyWeb.Controllers
         // Tutor's approach
         public async Task<IActionResult> Index()
         {
+            var token = HttpContext.Session.GetString("JWToken") ?? "";
             var listOfParkAndTrails = new IndexVM
             {
-                NationalParkList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath),
-                TrailList = await _trailRepository.GetAllAsync(SD.TrailAPIPath),
+                NationalParkList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath, token),
+                TrailList = await _trailRepository.GetAllAsync(SD.TrailAPIPath, token),
             };
             return View(listOfParkAndTrails);
         }

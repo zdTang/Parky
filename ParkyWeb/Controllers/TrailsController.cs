@@ -27,7 +27,8 @@ namespace ParkyWeb.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath);
+            var token = HttpContext.Session.GetString("JWToken") ?? "";
+            IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath, token);
             TrailsVM objVM = new TrailsVM()
             {
                 NationalParkList = npList?.Select(I => new SelectListItem
@@ -41,7 +42,7 @@ namespace ParkyWeb.Controllers
             if (id == null) return View(objVM); //
 
             // Follow will come here for update
-            objVM.Trail = await _trailRepository.GetAsync(SD.TrailAPIPath, id.GetValueOrDefault()); // get data from DB based on Id
+            objVM.Trail = await _trailRepository.GetAsync(SD.TrailAPIPath, id.GetValueOrDefault(), token); // get data from DB based on Id
             if (objVM.Trail == null) return NotFound();
             return View(objVM);
         }
@@ -50,21 +51,22 @@ namespace ParkyWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Upsert(TrailsVM? obj)
         {
+            var token = HttpContext.Session.GetString("JWToken") ?? "";
             if (ModelState.IsValid)
             {
                 if (obj?.Trail?.Id == 0)
                 {
-                    await _trailRepository.CreateAsync(SD.TrailAPIPath, obj.Trail);
+                    await _trailRepository.CreateAsync(SD.TrailAPIPath, obj.Trail, token);
                 }
                 else
                 {
-                    await _trailRepository.UpdateAsync(SD.TrailAPIPath + obj?.Trail?.Id, obj?.Trail!);
+                    await _trailRepository.UpdateAsync(SD.TrailAPIPath + obj?.Trail?.Id, obj?.Trail!, token);
                 }
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath);
+                IEnumerable<NationalPark>? npList = await _nationalParkRepository.GetAllAsync(SD.NationalParkAPIPath, token);
 
                 obj.NationalParkList = npList?.Select(I => new SelectListItem
                 {
@@ -79,7 +81,8 @@ namespace ParkyWeb.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var status = await _trailRepository.DeleteAsync(SD.TrailAPIPath, id);
+            var token = HttpContext.Session.GetString("JWToken") ?? "";
+            var status = await _trailRepository.DeleteAsync(SD.TrailAPIPath, id, token);
             if (status)
             {
                 return Json(new { success = true, message = "Delete Successful" });
@@ -89,7 +92,8 @@ namespace ParkyWeb.Controllers
 
         public async Task<IActionResult> GetAllTrails()
         {
-            var result = await _trailRepository.GetAllAsync(SD.TrailAPIPath);
+            var token = HttpContext.Session.GetString("JWToken") ?? "";
+            var result = await _trailRepository.GetAllAsync(SD.TrailAPIPath, token);
             return Json(new { data = result });
         }
 

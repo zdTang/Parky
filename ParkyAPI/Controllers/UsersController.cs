@@ -18,7 +18,7 @@ namespace ParkyAPI.Controllers
         }
 
 
-
+        // WEB Project's Login request will come here
         [AllowAnonymous]//When people goes here, he has not been authenticated yet
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] User model)

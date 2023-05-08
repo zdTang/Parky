@@ -28,7 +28,7 @@ namespace ParkyWeb.Repository
                 return new User();
             }
             var client = _clientFactory.CreateClient();
-            HttpResponseMessage response = await client.SendAsync(request);
+            HttpResponseMessage response = await client.SendAsync(request);  // Sent Request to API Project's "authenticate/" end point
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 var jsonString = await response.Content.ReadAsStringAsync();
