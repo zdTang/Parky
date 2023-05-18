@@ -75,7 +75,7 @@ namespace ParkyWeb.Controllers
             // authorized User
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.Name, obj.UserName!));
-            identity.AddClaim(new Claim(ClaimTypes.Role, obj.Role!));
+            identity.AddClaim(new Claim(ClaimTypes.Role, objUser.Role!));
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
